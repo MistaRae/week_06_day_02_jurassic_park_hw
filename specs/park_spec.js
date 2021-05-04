@@ -18,6 +18,7 @@ describe('Park', function() {
       triceratops2 = new Dinosaur('Triceratops', 'herbivore', 30)
       brontosaurus2 = new Dinosaur('Brontosaurus', 'herbivore', 15)
       tRex3 = new Dinosaur('T-Rex', 'carnivore', 75);
+      gallimimus = new Dinosaur('Gallimimus', 'omnivore', 1)
   })
 
   it('should have a name', function(){
@@ -96,4 +97,44 @@ describe('Park', function() {
     assert.strictEqual(actual, 31025000)
   });
 
+
+
+
+// Extensions
+
+// A park must be able to:
+
+  it('should be able to Remove all dinosaurs of a particular species', function(){
+    jurassicPark.addDinosaurToCollection(tRex1);
+    jurassicPark.addDinosaurToCollection(triceratops1);
+    jurassicPark.addDinosaurToCollection(brontosaurus1);
+    jurassicPark.addDinosaurToCollection(tRex2);
+    jurassicPark.addDinosaurToCollection(triceratops2);
+    jurassicPark.addDinosaurToCollection(brontosaurus2);
+    jurassicPark.addDinosaurToCollection(tRex3);
+    jurassicPark.removeBySpecies('T-Rex');
+    const actual = jurassicPark.collectionOfDinosaurs
+    assert.deepStrictEqual(actual, [triceratops1, brontosaurus1, triceratops2, brontosaurus2])
+  });
+
+it('Provide an object containing each of the diet types and the number of dinosaurs in the park of that diet type', function(){
+  jurassicPark.addDinosaurToCollection(tRex1);
+  jurassicPark.addDinosaurToCollection(triceratops1);
+  jurassicPark.addDinosaurToCollection(brontosaurus1);
+  jurassicPark.addDinosaurToCollection(tRex2);
+  jurassicPark.addDinosaurToCollection(triceratops2);
+  jurassicPark.addDinosaurToCollection(brontosaurus2);
+  jurassicPark.addDinosaurToCollection(tRex3);
+  jurassicPark.addDinosaurToCollection(gallimimus)
+  const actual = jurassicPark.dietTypes();
+  assert.deepStrictEqual(actual, { 'carnivore': 3, 'herbivore': 4, 'omnivore': 1 })
+  
+});
+// Example: { 'carnivore': 5, 'herbivore': 2, 'omnivore': 1 }
+
+
+
+// Hint: We want to avoid removing items from arrays while iterating over them. This is because iteration uses the index number to access the 
+// current item, and if you remove an item during one of the iterations, the position of each of the following items will be changed and lead to 
+// unexpected results. You will need to keep this principle in mind when removing all the dinosaurs of a particular species.
 });

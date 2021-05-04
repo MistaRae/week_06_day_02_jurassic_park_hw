@@ -17,9 +17,21 @@ const Park = function (name, ticketPrice) {
   Park.prototype.findBiggestAttraction = function(){
     // let biggestAttraction;
     this.collectionOfDinosaurs.sort(function sortByGuests(a,b) {
-        return a.guestsAttractedPerDay - b.guestsAttractedPerDay;
+      return b.guestsAttractedPerDay > a.guestsAttractedPerDay;
     });
-    return this.collectionOfDinosaurs[this.collectionOfDinosaurs.length -1]['species']
+
+    // let biggestDinosaurs = [];
+    // let biggestNumber = 0;
+    // this.collectionOfDinosaurs.forEach(function(dinosaur) {
+    //   if (dinosaur.guestsAttractedPerDay === biggestNumber) {
+    //     biggestDinosaurs.push(dinosaur);
+    //   } else if (dinosaur.guestsAttractedPerDay > biggestNumber) {
+    //     biggestDinosaurs = [dinosaur];
+    //     biggestNumber = dinosaur.guestsAttractedPerDay;
+    //   }}
+    // });
+    // return biggestDinosaurs;
+    return this.collectionOfDinosaurs[0]['species']
   };
     // let visitorsAttracted = []
     // for (let dino in this.collectionOfDinosaurs) {
@@ -29,7 +41,7 @@ const Park = function (name, ticketPrice) {
     // return biggestAttraction
 
   Park.prototype.getDinosaursBySpecies = function (species){
-      let dinosaursFound = []
+      let dinosaursFound = [];
       for (let dinosaur of this.collectionOfDinosaurs) {
           if (dinosaur.species === species) {
             dinosaursFound.push(dinosaur)}
@@ -60,10 +72,29 @@ const Park = function (name, ticketPrice) {
     for (let dinosaur of this.collectionOfDinosaurs) {
         total += dinosaur.guestsAttractedPerDay
     }
-    let yearlyTotal = total * 365
-    let yearlyRevenue = yearlyTotal * this.ticketPrice
-    return yearlyRevenue
+    return total * 365 * this.ticketPrice;
+    // let yearlyRevenue = yearlyTotal * this.ticketPrice
+    // return yearlyRevenue
   }
+
+  Park.prototype.removeBySpecies = function(species) {
+    let filteredDinosaurs = this.collectionOfDinosaurs.filter(function(dinosaur){
+      return dinosaur.species != species;
+    });
+    this.collectionOfDinosaurs = filteredDinosaurs;
+  }
+
+  Park.prototype.dietTypes = function(){
+    let diets = {};
+    this.collectionOfDinosaurs.forEach(function (dinosaur) {
+      if (diets[dinosaur.diet]) {
+        diets[dinosaur.diet] += 1;
+      } else {
+        diets[dinosaur.diet] = 1;
+      };
+    });
+    return diets;
+  };
 
 
   module.exports = Park;
